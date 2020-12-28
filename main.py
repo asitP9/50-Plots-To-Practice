@@ -26,7 +26,7 @@ plt.rcParams.update(params)
 plt.style.use('seaborn-whitegrid')
 sns.set_style("white")
 
-
+# PLOT 1:::
 def scatterPlot():
     # Import Dataset
     midwest=pd.read_csv("https://raw.githubusercontent.com/selva86/datasets/master/midwest_filter.csv")
@@ -54,7 +54,7 @@ def scatterPlot():
     plt.show()
 
 
-
+# PLOT 2:::
 def bubblePlot():
     from matplotlib import patches
     from scipy.spatial import ConvexHull
@@ -100,8 +100,68 @@ def bubblePlot():
     plt.title("Bubble Plot with encircling", fontsize=22)
     plt.legend(fontsize=12)
     plt.show()
+
+
+
+    # PLOT 3:::  Scatter plot with linear regression line of best fit
+    # Useful for:
+    # This is a normal scatter plot but we also plot a simple
+    # regression line to see the correlation between the x and the y variables.
+def scatterPlotWithRegressionLine():
+    path="datasets/mpg_ggplot2.csv"
+    df=pd.read_csv(path)
+
+    # Prepare the data for plotting
+    # filter only 2 classes to separate it more easily on the plot
+    df=df[df["cyl"].isin([4, 8])]
+    # print("I m df", df)
+    # Plot the data using seaborn
+    sns.lmplot(x="displ", y= "hwy", data= df, hue="cyl")
+
+    # Prettify the plot
+
+    # Since we are using seaborn and this library uses matplotlib behind the scenes
+    # u can call plt.gcs() (get current axes) and all the familiar matplotlib commands
+    ax=plt.gca()
+
+    # Change the upper limit of the plot to make it more pleasant
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 50)
+
+    # set the title
+    ax.set_title("Scatter plot with regression")
+    plt.show()
+
+
+
+# Plot 4: Jittering with Strip Plot
+# Useful for
+# Draw a scatterplot where one variable is categorical.
+# This is useful to see the distributions of the points of each category.
+def jitteringWithStripPlot():
+    path="datasets/mpg_ggplot2.csv"
+    df=pd.read_csv(path)
+
+
+    # Prepare the data for plotting
+    # Separate X and Y variables
+    x=df["cty"]
+    y=df["hwy"]
+
+
+    # Instanciate the figure
+    plt.figure(figsize=(10, 7))
+
+    # Plot the data using Seaborn
+    ax=sns.stripplot(x=x, y=y)
+
+    # Prettify the plot
+    # set title
+    ax=ax.set_title("Jitter Plot")
+    plt.show()
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    bubblePlot()
+    jitteringWithStripPlot()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
